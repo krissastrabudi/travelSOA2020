@@ -1,0 +1,35 @@
+const mysql = require('mysql');
+const config = require('./config');
+
+const pool = mysql.createPool(config.database);
+
+const getConnection = async () => {
+    return new Promise((resolve, reject) => {
+        pool.getConnection((err, conn) => {
+            if (err) reject(err);
+            else resolve(conn);
+        })
+    })
+}
+
+const executeQuery = async (query, conn) => {
+    return new Promise((resolve, reject) => {
+        pool.query(query, (err, rows, fields) => {
+            if (err) reject(err);
+            else resolve(rows);
+        })
+    })
+}
+
+const query = async(sql)=>{
+    var con = await getConnection();
+    var hasil = await executeQuery(sql,con);
+    con.release();
+    return hasil;
+}
+
+module.exports = {
+    'executeQuery' : executeQuery,
+    'getConnection' : getConnection,
+    "query" : query
+}

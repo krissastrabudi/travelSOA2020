@@ -1,0 +1,3778 @@
+{
+	"info": {
+		"_postman_id": "e29e05eb-e8d6-4965-9118-e7144533a848",
+		"name": "Proyek SOA Travel",
+		"description": "Travel API dilengkapi dengan fitur booking, cancel booking, reschedule jadwal, review hotel dan juga pembayarannya",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "Add Comment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "64fbb80c-20a5-4547-b3c0-29af85e0f086",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\" , value: \"sastrabudi@gmail.com\", disabled:false},\r",
+									"            { key: \"password\" , value: \"budi\", disabled:false}\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_comment_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "95d82588-d933-4962-98e9-aef26722ac29",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_comment_jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email_user",
+									"value": "sastrabudi@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "judul_comment",
+									"value": "Good!",
+									"type": "text"
+								},
+								{
+									"key": "isi_comment",
+									"value": "Nice and clean hotel, friendly crew and good food. Only follow up on mentioned environmental plan could be better. Like changing towels, when they are on hand rail, and card mention to use again.",
+									"type": "text"
+								},
+								{
+									"key": "jumlah_bintang",
+									"value": "5",
+									"type": "text"
+								},
+								{
+									"key": "nama_hotel",
+									"value": "JW Marriot",
+									"type": "text"
+								},
+								{
+									"key": "tgl_posting",
+									"value": "2020-05-01",
+									"description": "yyyy-mm-dd",
+									"type": "text"
+								},
+								{
+									"key": "lokasi",
+									"value": "New York",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/comment/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"comment",
+								""
+							]
+						},
+						"description": "untuk memberikan comment ke sebuah hotel"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Comment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "7a0360a7-9e2f-4ba5-a961-04c85e9bf90e",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d3e1855a-3f5b-48f5-afa5-fb76efc816f3",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNhc3RyYWJ1ZGlAZ21haWwuY29tIiwidGlwZV91c2VyIjoiMSIsImlhdCI6MTU5MDc2MzA3NCwiZXhwIjoxNTkwNzY4NDc0fQ.xjcgXoAYdkxszlBR9lZV35EIAFw_01hoTq0qioMX1os",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/comment/all",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"comment",
+								"all"
+							]
+						},
+						"description": "mendapatkan semua komen yang ada"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Comment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1ddc3329-bf6e-42c5-9f85-201cdd92f510",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\" , value: \"sastrabudi@gmail.com\", disabled:false},\r",
+									"            { key: \"password\" , value: \"budi\", disabled:false}\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"put_comment_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "356c813e-bb47-46f6-84f2-4442f05a0781",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{put_comment_jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_comment",
+									"value": "4",
+									"type": "text"
+								},
+								{
+									"key": "judul_comment",
+									"value": "Very Bad!",
+									"type": "text"
+								},
+								{
+									"key": "isi_comment",
+									"value": "very very bad",
+									"type": "text"
+								},
+								{
+									"key": "jumlah_bintang",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "nama_hotel",
+									"value": "JW Marriot",
+									"type": "text"
+								},
+								{
+									"key": "tgl_update",
+									"value": "2020-05-01",
+									"description": "yyyy-mm-dd",
+									"type": "text"
+								},
+								{
+									"key": "lokasi",
+									"value": "New York",
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/comment/update",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"comment",
+								"update"
+							]
+						},
+						"description": "Untuk melakukanupdate terhadapt suatu comment yang pernah ditulis berdasarkan id comment"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Comment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "34e5bc28-84e1-4b56-927b-7697c40cc1e1",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\" , value: \"sastrabudi@gmail.com\", disabled:false},\r",
+									"            { key: \"password\" , value: \"budi\", disabled:false}\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"del_comment_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});\r",
+									"\r",
+									"pm.sendRequest({\r",
+									"    url: 'localhost:3000/api/comment/tesinsert',\r",
+									"    method: 'POST',\r",
+									"    body: {\r",
+									"        mode: 'urlencoded'\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    console.log(err);\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"test_id_comment\", \"1\");"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "113f6979-d508-4576-a968-ebdddfd2007c",
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{del_comment_jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_comment",
+									"value": "{{test_id_comment}}",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "isi_comment",
+									"value": "very very bad",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "jumlah_bintang",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "nama_hotel",
+									"value": "JW Marriot",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "tgl_update",
+									"value": "2020-05-01",
+									"description": "yyyy-mm-dd",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "lokasi",
+									"value": "New York",
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/comment/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"comment",
+								"delete"
+							]
+						},
+						"description": "Untuk menghapus sebuah komen berdasarkan id"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Comment by Login User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "79782313-74c1-4478-9cb4-a10411a58adf",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"get_comment_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "60c822c0-681f-4159-bf2a-341bab3a48cc",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{get_comment_jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/comment/mycomment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"comment",
+								"mycomment"
+							]
+						},
+						"description": "mendapatkan semua comment yang pernah ditulis oleh user yang sedang login"
+					},
+					"response": []
+				},
+				{
+					"name": "get Comments by Star",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4f2d7307-35a0-4fe9-b653-b94fbca08961",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\" , value: \"sastrabudi@gmail.com\", disabled:false},\r",
+									"            { key: \"password\" , value: \"budi\", disabled:false}\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"get_comment_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});\r",
+									"\r",
+									"data = pm.environment.get(\"get_comment\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"get_comment_status_code\": 200,\r",
+									"            \"get_comment_query\": \"?loc=new york&star=5&name=jw marriot\"\r",
+									"        }\r",
+									"    ];\r",
+									"}\r",
+									"let currentData = data.shift();\r",
+									"pm.environment.set(\"get_comment_query\", currentData[\"get_comment_query\"]);\r",
+									"pm.environment.set(\"get_comment_status_code\", currentData[\"get_comment_status_code\"]);\r",
+									"pm.environment.set(\"get_comment\", data);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "d36e76a6-81e5-40a9-8942-b7a7dc036f0b",
+								"exec": [
+									"data = pm.environment.get(\"get_comment\");\r",
+									"flag = false;\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"get Comments by Star\");\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"get_comment_status_code\"));\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{get_comment_jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/comment/bystar{{get_comment_query}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"comment",
+								"bystar{{get_comment_query}}"
+							]
+						},
+						"description": "mendapatkan semua comment di sebuah hotel dengan bintang tertentu. Parameter yang digunakan adalah loc(kota), star(jumlah bintang), dan name(nama hotel). ketiga parameter harus diisi"
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Hotel",
+			"item": [
+				{
+					"name": "Get Hotel",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/hotel/getHotel?nama_kota=New York&limit=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"hotel",
+								"getHotel"
+							],
+							"query": [
+								{
+									"key": "nama_kota",
+									"value": "New York"
+								},
+								{
+									"key": "limit",
+									"value": "1"
+								},
+								{
+									"key": "lang",
+									"value": "en",
+									"disabled": true
+								}
+							]
+						},
+						"description": "View Hotel yang tersedia pada travelpayouts, dengan kembalian array of hotel. minimum adalah seperti contoh dengan tambahan parameter:\nlang = language yang akan dicari (default en)\nlimit = limit hasil hotel yang akan dicari (default 5)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hotel With Variable",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d4926bec-4f67-4745-b3a0-b86b1020062b",
+								"exec": [
+									"data = pm.environment.get(\"get_hotel\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"get_hotel_status_code\": 400,\r",
+									"            \"get_hotel_query\": \"?nama_kota=\",\r",
+									"            \"get_hotel_body\":{\r",
+									"                \"status\":400,\r",
+									"                \"message\":\"nama_kota tidak ada pada url anda\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"get_hotel_status_code\": 200,\r",
+									"            \"get_hotel_query\": \"?nama_kota=New York\",\r",
+									"            \"get_hotel_body\":\r",
+									"                [\r",
+									"                    {\r",
+									"                    \"nama_hotel\": \"New York New York\",\r",
+									"                    \"lokasi\": \"Las Vegas, Nevada, United States\",\r",
+									"                    \"longitude\": -115.17341,\r",
+									"                    \"latitude\": 36.10158,\r",
+									"                    \"full name\": \"New York New York, Las Vegas, Nevada, United States\"\r",
+									"                    },\r",
+									"                    {\r",
+									"                    \"nama_hotel\": \"New York Palace, The Dedica Anthology, Autograph Collection\",\r",
+									"                    \"lokasi\": \"Budapest, Hungary\",\r",
+									"                    \"longitude\": 19.07038,\r",
+									"                    \"latitude\": 47.49848,\r",
+									"                    \"full name\": \"New York Palace, The Dedica Anthology, Autograph Collection, Budapest, Hungary\"\r",
+									"                    },\r",
+									"                    {\r",
+									"                    \"nama_hotel\": \"New York Marriott Marquis\",\r",
+									"                    \"lokasi\": \"New York City, New York, United States\",\r",
+									"                    \"longitude\": -73.98556,\r",
+									"                    \"latitude\": 40.75838,\r",
+									"                    \"full name\": \"New York Marriott Marquis, New York City, New York, United States\"\r",
+									"                    },\r",
+									"                    {\r",
+									"                    \"nama_hotel\": \"Hotel New York\",\r",
+									"                    \"lokasi\": \"Rotterdam, Netherlands\",\r",
+									"                    \"longitude\": 4.48419,\r",
+									"                    \"latitude\": 51.90402,\r",
+									"                    \"full name\": \"Hotel New York, Rotterdam, Netherlands\"\r",
+									"                    },\r",
+									"                    {\r",
+									"                    \"nama_hotel\": \"Pod 39\",\r",
+									"                    \"lokasi\": \"New York City, New York, United States\",\r",
+									"                    \"longitude\": -73.97664,\r",
+									"                    \"latitude\": 40.74931,\r",
+									"                    \"full name\": \"Pod 39, New York City, New York, United States\"\r",
+									"                    }\r",
+									"                ]\r",
+									"        },\r",
+									"        {\r",
+									"            \"get_hotel_status_code\": 200,\r",
+									"            \"get_hotel_query\": \"?nama_kota=New York&limit=1\",\r",
+									"            \"get_hotel_body\":\r",
+									"            [\r",
+									"                {\r",
+									"                    \"nama_hotel\": \"New York New York\",\r",
+									"                    \"lokasi\": \"Las Vegas, Nevada, United States\",\r",
+									"                    \"longitude\": -115.17341,\r",
+									"                    \"latitude\": 36.10158,\r",
+									"                    \"full name\": \"New York New York, Las Vegas, Nevada, United States\"\r",
+									"                }\r",
+									"            ]\r",
+									"        }\r",
+									"    ];\r",
+									"}\r",
+									"let currentData = data.shift();\r",
+									"pm.environment.set(\"get_hotel_query\", currentData[\"get_hotel_query\"]);\r",
+									"pm.environment.set(\"get_hotel_status_code\", currentData[\"get_hotel_status_code\"]);\r",
+									"pm.environment.set(\"get_hotel_body\", currentData[\"get_hotel_body\"]);\r",
+									"pm.environment.set(\"get_hotel\", data);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "1f19f64c-c1b8-4dfd-befe-a584b3d9d37d",
+								"exec": [
+									"data = pm.environment.get(\"get_hotel\");\r",
+									"flag = false;\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Get Hotel With Variable\");\r",
+									"} \r",
+									"\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"get_hotel_status_code\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Returned data is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.eql(pm.variables.get(\"get_hotel_body\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/hotel/getHotel{{get_hotel_query}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"hotel",
+								"getHotel{{get_hotel_query}}"
+							]
+						},
+						"description": "Testing view hotel"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hotel Price",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "86590e35-6703-4bc1-93c5-59bd0cdbda4c",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/hotel/getPrice?nama_hotel=Mercure&lokasi=Saint-Petersburg&checkIn=2020-05-30&checkOut=2020-06-02",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"hotel",
+								"getPrice"
+							],
+							"query": [
+								{
+									"key": "nama_hotel",
+									"value": "Mercure"
+								},
+								{
+									"key": "lokasi",
+									"value": "Saint-Petersburg"
+								},
+								{
+									"key": "checkIn",
+									"value": "2020-05-30"
+								},
+								{
+									"key": "checkOut",
+									"value": "2020-06-02"
+								},
+								{
+									"key": "currency",
+									"value": "usd",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "4",
+									"disabled": true
+								},
+								{
+									"key": "adults",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "infants",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "children",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Mendapatkan Harga dari hotel-hotel yand anda cari. minimum adalah seperti contoh dengan tambahan parameter:  \ncurrency = mata uang yang akan dipakai (default usd)  \nlimit = limit hotel yang akan dikembalikan (default 8)  \nadults = jumlah orang dewasa (default 2)  \ninfants = jumlah balita (default None)  \nchildren = jumlah anak-anak (default None)  "
+					},
+					"response": []
+				},
+				{
+					"name": "Get Hotel Price With Variable",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "ab95b85c-f5c2-4233-a5fc-1a24251c5157",
+								"exec": [
+									"data = pm.environment.get(\"get_hotel\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"get_hotel_status_code\": 400,\r",
+									"            \"get_hotel_query\": \"?nama_hotel=\",\r",
+									"            \"get_hotel_body\": {\r",
+									"                \"status\": 400,\r",
+									"                \"message\": \"nama_hotel atau lokasi tidak ada pada url anda\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"get_hotel_status_code\": 400,\r",
+									"            \"get_hotel_query\": \"?nama_hotel=Mercure&lokasi=\",\r",
+									"            \"get_hotel_body\": {\r",
+									"                \"status\": 400,\r",
+									"                \"message\": \"nama_hotel atau lokasi tidak ada pada url anda\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"get_hotel_status_code\": 400,\r",
+									"            \"get_hotel_query\": \"?nama_hotel=Mercure&lokasi=Saint-Petersburg\",\r",
+									"            \"get_hotel_body\": {\r",
+									"                \"status\": 400,\r",
+									"                \"message\": \"checkOut atau checkIn tidak ada pada url anda\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"get_hotel_status_code\": 400,\r",
+									"            \"get_hotel_query\": \"?nama_hotel=Mercure&lokasi=Saint-Petersburg&checkIn=2020-05-09\",\r",
+									"            \"get_hotel_body\": {\r",
+									"                \"status\": 400,\r",
+									"                \"message\": \"checkOut atau checkIn tidak ada pada url anda\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"get_hotel_status_code\": 400,\r",
+									"            \"get_hotel_query\": \"?nama_hotel=Mercure&lokasi=Saint-Petersburg&checkIn=2020-05-09&checkOut=2020-05-12\",\r",
+									"            \"get_hotel_body\": {\r",
+									"                \"status\": 400,\r",
+									"                \"message\": \"tanggal hari ini harus lebih besar daripada checkin anda dan checkout tidak boleh lebih kecil daripada checkin anda\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"get_hotel_status_code\": 200,\r",
+									"            \"get_hotel_query\": \"?nama_hotel=Mercure&lokasi=Saint-Petersburg&checkIn=2020-05-10&checkOut=2020-05-15\",\r",
+									"            \"get_hotel_body\":\r",
+									"            {\r",
+									"                \"hotelId\": 614387,\r",
+									"                \"priceFrom\": 96,\r",
+									"                \"locationId\": 25032,\r",
+									"                \"hotelName\": \"Mercure Grand Mirama Surabaya\",\r",
+									"                \"stars\": 4,\r",
+									"                \"pricePercentile\": {\r",
+									"                    \"3\": 96,\r",
+									"                    \"10\": 96,\r",
+									"                    \"35\": 96,\r",
+									"                    \"50\": 96,\r",
+									"                    \"75\": 96,\r",
+									"                    \"99\": 96\r",
+									"                },\r",
+									"                \"priceAvg\": 96,\r",
+									"                \"location\": {\r",
+									"                    \"state\": null,\r",
+									"                    \"geo\": {\r",
+									"                        \"lon\": 30.316667,\r",
+									"                        \"lat\": 59.95\r",
+									"                    },\r",
+									"                    \"name\": \"St. Petersburg\",\r",
+									"                    \"country\": \"Russia\"\r",
+									"                }\r",
+									"            }\r",
+									"        }\r",
+									"    ];\r",
+									"}\r",
+									"let currentData = data.shift();\r",
+									"pm.environment.set(\"get_hotel_query\", currentData[\"get_hotel_query\"]);\r",
+									"pm.environment.set(\"get_hotel_status_code\", currentData[\"get_hotel_status_code\"]);\r",
+									"pm.environment.set(\"get_hotel_body\", currentData[\"get_hotel_body\"]);\r",
+									"pm.environment.set(\"get_hotel\", data);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "486c050f-0ce8-40b7-baa9-f2b05c56292e",
+								"exec": [
+									"data = pm.environment.get(\"get_hotel\");\r",
+									"flag = false;\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Get Hotel Price With Variable\");\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"get_hotel_status_code\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Returned data is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.eql(pm.variables.get(\"get_hotel_body\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/hotel/getPrice{{get_hotel_query}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"hotel",
+								"getPrice{{get_hotel_query}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Booking",
+			"item": [
+				{
+					"name": "Booking a room(s)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndpbGxpYW1AZ21haWwuY29tIiwidGlwZV91c2VyIjoiMSIsImlhdCI6MTU5MDgzOTYwOCwiZXhwIjoxNTkwODQ1MDA4fQ.bqSK3lDl2x7g2gnpWIqqNy5D_SEMzUVuuohKyjgG1pY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "lokasi",
+									"value": "New York",
+									"type": "text"
+								},
+								{
+									"key": "nama_hotel",
+									"value": "JW Marriot",
+									"type": "text"
+								},
+								{
+									"key": "customer_email",
+									"value": "william@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "data",
+									"value": "\"Standard\",50,1}\"Luxury Room\",80,1",
+									"description": "input berupa item yang dipisah dengan tanda }",
+									"type": "text"
+								},
+								{
+									"key": "check_in",
+									"value": "2020-06-01",
+									"description": "yyyy-mm-dd",
+									"type": "text"
+								},
+								{
+									"key": "check_out",
+									"value": "2020-06-04",
+									"description": "yyyy-mm-dd",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/booking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking"
+							]
+						},
+						"description": "Booking a room(s), dan akan tercatat pada database. Untuk bagian parameter data berupa list of item yang dipisah dengan tanda '}' dengan format:  \nnama_kamar,harga,jumlah"
+					},
+					"response": []
+				},
+				{
+					"name": "Booking a room(s) With Variable",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6f49f9aa-9bb5-4bbf-a27f-66d9679624df",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\" , value: \"sastrabudi@gmail.com\", disabled:false},\r",
+									"            { key: \"password\" , value: \"budi\", disabled:false}\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});\r",
+									"data = pm.environment.get(\"post_booking\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"post_booking_lokasi\": \"New York\",\r",
+									"            \"post_booking_nama_hotel\": \"JW Marriot\",\r",
+									"            \"post_booking_customer_email\": \"sastrabudi@gmail.com\",\r",
+									"            \"post_booking_data\": \"\\\"Standard\\\",40,2}\\\"Family Room\\\",65,1\",\r",
+									"            \"post_booking_check_in\": \"2020-05-10\",\r",
+									"            \"post_booking_check_out\": \"2020-05-12\",\r",
+									"            \"post_booking_status_code\": 400,\r",
+									"            \"post_booking_body\": {\r",
+									"                \"status\":400,\r",
+									"                \"message\":\"tanggal check out sudah lewat dari hari ini\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"post_booking_lokasi\": \"New York\",\r",
+									"            \"post_booking_nama_hotel\": \"JW Marriot\",\r",
+									"            \"post_booking_customer_email\": \"sastrabudi@gmail.com\",\r",
+									"            \"post_booking_data\": \"\\\"Standard\\\",40,2}\\\"Family Room\\\",65,1\",\r",
+									"            \"post_booking_check_in\": \"2020-06-12\",\r",
+									"            \"post_booking_check_out\": \"2020-06-20\",\r",
+									"            \"post_booking_status_code\": 200,\r",
+									"            \"post_booking_body\": {\r",
+									"                \"status\":200,\r",
+									"                \"message\":\"booking berhasil\",\r",
+									"            }\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"let current_data = data.shift();\r",
+									"pm.environment.set(\"post_booking_lokasi\", current_data[\"post_booking_lokasi\"]);\r",
+									"pm.environment.set(\"post_booking_nama_hotel\", current_data[\"post_booking_nama_hotel\"]);\r",
+									"pm.environment.set(\"post_booking_customer_email\", current_data[\"post_booking_customer_email\"]);\r",
+									"pm.environment.set(\"post_booking_data\", current_data[\"post_booking_data\"]);\r",
+									"pm.environment.set(\"post_booking_check_in\", current_data[\"post_booking_check_in\"]);\r",
+									"pm.environment.set(\"post_booking_check_out\", current_data[\"post_booking_check_out\"]);\r",
+									"pm.environment.set(\"post_booking_status_code\", current_data[\"post_booking_status_code\"]);\r",
+									"pm.environment.set(\"post_booking_body\", current_data[\"post_booking_body\"]);\r",
+									"pm.environment.set(\"post_booking\", data);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "3e926738-9577-4f31-b9d7-0b123aec7d66",
+								"exec": [
+									"data = pm.environment.get(\"post_booking\");\r",
+									"flag = false;\r",
+									"\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Booking a room(s) With Variable\");\r",
+									"}\r",
+									"// else {\r",
+									"//     postman.setNextRequest(\"Delete Mahasiswa\");\r",
+									"//     flag = true;\r",
+									"// }\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"post_booking_status_code\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Returned data is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.eql(pm.variables.get(\"post_booking_body\"));\r",
+									"});\r",
+									"if (flag) {\r",
+									"    pm.environment.unset(\"post_booking_nama_hotel\");\r",
+									"    pm.environment.unset(\"post_booking_customer_email\");\r",
+									"    pm.environment.unset(\"post_booking_data\");\r",
+									"    pm.environment.unset(\"post_booking_check_in\");\r",
+									"    pm.environment.unset(\"post_booking_check_out\");\r",
+									"    pm.environment.unset(\"post_booking_status_code\");\r",
+									"    pm.environment.unset(\"post_booking_body\");\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_booking_jwt}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "lokasi",
+									"value": "{{post_booking_lokasi}}",
+									"type": "text"
+								},
+								{
+									"key": "nama_hotel",
+									"value": "{{post_booking_nama_hotel}}",
+									"type": "text"
+								},
+								{
+									"key": "customer_email",
+									"value": "{{post_booking_customer_email}}",
+									"type": "text"
+								},
+								{
+									"key": "data",
+									"value": "{{post_booking_data}}",
+									"description": "input berupa item yang dipisah dengan tanda }",
+									"type": "text"
+								},
+								{
+									"key": "check_in",
+									"value": "{{post_booking_check_in}}",
+									"description": "yyyy-mm-dd",
+									"type": "text"
+								},
+								{
+									"key": "check_out",
+									"value": "{{post_booking_check_out}}",
+									"description": "yyyy-mm-dd",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/booking",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Status Booking",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndpbGxpYW1AZ21haWwuY29tIiwidGlwZV91c2VyIjoiMSIsImlhdCI6MTU5MDgzOTYwOCwiZXhwIjoxNTkwODQ1MDA4fQ.bqSK3lDl2x7g2gnpWIqqNy5D_SEMzUVuuohKyjgG1pY",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/booking/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking",
+								"status"
+							],
+							"query": [
+								{
+									"key": "id_booking",
+									"value": "0",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Dapatkan Status Booking anda dimana yang dikembalikan adalah booking yang dilakukan oleh user dengan token yang tertera. apabila ingin mengetahui booking tertentu berikan parameter tambahan pada url '?id_booking=<id_booking>'"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Status Booking With Variable",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "afe0813c-7ea4-480b-8424-557f01dcb6cc",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\" , value: \"sastrabudi@gmail.com\", disabled:false},\r",
+									"            { key: \"password\" , value: \"budi\", disabled:false}\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"get_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});\r",
+									"\r",
+									"data = pm.environment.get(\"get_booking\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"get_booking_status_code\": 200,\r",
+									"            \"get_booking_query\": \"?id_booking=2\",\r",
+									"            \"get_booking_body\": \r",
+									"            [\r",
+									"                {\r",
+									"                    \"Booking ID\": 2,\r",
+									"                    \"Nama Hotel\": \"JW Marriot\",\r",
+									"                    \"Lokasi\": \"New York\",\r",
+									"                    \"Status Booking\": \"Pembayaran belum selesai\"\r",
+									"                }\r",
+									"            ]\r",
+									"        }\r",
+									"    ];\r",
+									"}\r",
+									"let currentData = data.shift();\r",
+									"pm.environment.set(\"get_booking_query\", currentData[\"get_booking_query\"]);\r",
+									"pm.environment.set(\"get_booking_status_code\", currentData[\"get_booking_status_code\"]);\r",
+									"pm.environment.set(\"get_booking_body\", currentData[\"get_booking_body\"]);\r",
+									"pm.environment.set(\"get_booking\", data);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "41b3a2e4-0689-4981-8aae-8f43de40dadc",
+								"exec": [
+									"data = pm.environment.get(\"get_booking\");\r",
+									"flag = false;\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Get Status Booking With Variable\");\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"get_booking_status_code\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Returned data is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.eql(pm.variables.get(\"get_booking_body\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{get_booking_jwt}}"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/booking/status{{get_booking_query}}",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking",
+								"status{{get_booking_query}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Status Booking",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsInRpcGVfdXNlciI6IjMiLCJpYXQiOjE1OTA4NDAxMTQsImV4cCI6MTU5MDg0NTUxNH0.BCPmJ16qPx37vOZ0_SFNyNfE6krYNdc65rDeGNXE0as",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_booking",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "1",
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/booking/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking",
+								"status"
+							]
+						},
+						"description": "hanya dapat diakses oleh user bertipe Operator API. url ini dapat mengubah status booking. apabila tidak ada body 'status', maka status booking akan ditambah 1"
+					},
+					"response": []
+				},
+				{
+					"name": "Change Status Booking With Variable",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b1f1f16b-abd0-46b8-8592-a5fdb7ded897",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\" , value: \"sastrabudi@gmail.com\", disabled:false},\r",
+									"            { key: \"password\" , value: \"budi\", disabled:false}\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});\r",
+									"\r",
+									"data = pm.environment.get(\"post_booking\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"post_booking_id\": \"2\",\r",
+									"            \"post_booking_status\": \"1\",\r",
+									"            \"post_booking_status_code\": 200,\r",
+									"            \"post_booking_body\": {\r",
+									"                \"status\":200,\r",
+									"                \"message\":\"Pembayaran belum selesai\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"post_booking_id\": \"2\",\r",
+									"            \"post_booking_status\": \"2\",\r",
+									"            \"post_booking_status_code\": 200,\r",
+									"            \"post_booking_body\": {\r",
+									"                \"status\":200,\r",
+									"                \"message\":\"Booking sedang diproses\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"post_booking_id\": \"2\",\r",
+									"            \"post_booking_status\": \"3\",\r",
+									"            \"post_booking_status_code\": 200,\r",
+									"            \"post_booking_body\": {\r",
+									"                \"status\":200,\r",
+									"                \"message\":\"Booking telah dipesan pada hotel\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"post_booking_id\": \"2\",\r",
+									"            \"post_booking_status\": \"4\",\r",
+									"            \"post_booking_status_code\": 200,\r",
+									"            \"post_booking_body\": {\r",
+									"                \"status\":200,\r",
+									"                \"message\":\"Booking berhasil\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"post_booking_id\": \"2\",\r",
+									"            \"post_booking_status\": \"5\",\r",
+									"            \"post_booking_status_code\": 200,\r",
+									"            \"post_booking_body\": {\r",
+									"                \"status\":200,\r",
+									"                \"message\":\"Booking gagal\"\r",
+									"            }\r",
+									"        },\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"let current_data = data.shift();\r",
+									"pm.environment.set(\"post_booking_id\", current_data[\"post_booking_id\"]);\r",
+									"pm.environment.set(\"post_booking_status\", current_data[\"post_booking_status\"]);\r",
+									"pm.environment.set(\"post_booking_status_code\", current_data[\"post_booking_status_code\"]);\r",
+									"pm.environment.set(\"post_booking_body\", current_data[\"post_booking_body\"]);\r",
+									"pm.environment.set(\"post_booking\", data);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "390ce1b8-a8b2-4719-ac20-12137e4b3dfb",
+								"exec": [
+									"data = pm.environment.get(\"post_booking\");\r",
+									"flag = false;\r",
+									"\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Change Status Booking With Variable\");\r",
+									"}\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"post_booking_status_code\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Returned data is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.eql(pm.variables.get(\"post_booking_body\"));\r",
+									"});\r",
+									"if (flag) {\r",
+									"    pm.environment.unset(\"post_booking_status\");\r",
+									"    pm.environment.unset(\"post_booking_id\");\r",
+									"    pm.environment.unset(\"post_booking_status_code\");\r",
+									"    pm.environment.unset(\"post_booking_body\");\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_booking_jwt}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_booking",
+									"value": "{{post_booking_id}}",
+									"type": "text"
+								},
+								{
+									"key": "status",
+									"value": "{{post_booking_status}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/booking/status",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm From Hotel",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvdGVsQHlhaG9vLmNvbSIsInRpcGVfdXNlciI6IjIiLCJpYXQiOjE1OTA4NDE3NzksImV4cCI6MTU5MDg0NzE3OX0.rx5yRNipPLStfRh6BmcCOj6eQrRQmmB8CcxS4mYAcgg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_booking",
+									"value": "0",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/booking/confirm",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking",
+								"confirm"
+							]
+						},
+						"description": "Hanya dapat diakses oleh user dengan tipe operator Hotel untuk melakukan confirmasi apakah booking user disetujui"
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm From Hotel With Variable",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "37e027cc-f7c0-493f-9b8f-6e7da6322119",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\" , value: \"sastrabudi@gmail.com\", disabled:false},\r",
+									"            { key: \"password\" , value: \"budi\", disabled:false}\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});\r",
+									"data = pm.environment.get(\"post_booking\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"post_booking_id\": \"2\",\r",
+									"            \"post_booking_status_code\": 200,\r",
+									"            \"post_booking_body\": {\r",
+									"                \"status\": 200,\r",
+									"                \"message\": \"Booking id 2 telah di setujui\"\r",
+									"            }\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"let current_data = data.shift();\r",
+									"pm.environment.set(\"post_booking_id\", current_data[\"post_booking_id\"]);\r",
+									"pm.environment.set(\"post_booking_status_code\", current_data[\"post_booking_status_code\"]);\r",
+									"pm.environment.set(\"post_booking_body\", current_data[\"post_booking_body\"]);\r",
+									"pm.environment.set(\"post_booking\", data);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "38e2cd43-13ef-475a-8d96-8c60e7293398",
+								"exec": [
+									"data = pm.environment.get(\"post_booking\");\r",
+									"flag = false;\r",
+									"\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Confirm From Hotel With Variable\");\r",
+									"}\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"post_booking_status_code\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Returned data is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.eql(pm.variables.get(\"post_booking_body\"));\r",
+									"});\r",
+									"if (flag) {\r",
+									"    pm.environment.unset(\"post_booking_id\");\r",
+									"    pm.environment.unset(\"post_booking_status_code\");\r",
+									"    pm.environment.unset(\"post_booking_body\");\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_booking_jwt}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_booking",
+									"value": "{{post_booking_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/booking/confirm",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking",
+								"confirm"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Booking from hotel",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhvdGVsQHlhaG9vLmNvbSIsInRpcGVfdXNlciI6IjIiLCJpYXQiOjE1OTA4NDE3NzksImV4cCI6MTU5MDg0NzE3OX0.rx5yRNipPLStfRh6BmcCOj6eQrRQmmB8CcxS4mYAcgg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_booking",
+									"value": "0",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/booking/reject",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking",
+								"reject"
+							]
+						},
+						"description": "Hanya dapat diakses oleh user dengan tipe operator Hotel untuk melakukan confirmasi apakah booking user tidak disetujui"
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Booking from hotel With Variable",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "33d4ddf3-a2e2-4b16-9b4d-6a5e03c18c4e",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});\r",
+									"data = pm.environment.get(\"post_booking\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"post_booking_id\": \"2\",\r",
+									"            \"post_booking_status_code\": 200,\r",
+									"            \"post_booking_body\": {\r",
+									"                \"status\": 200,\r",
+									"                \"message\": \"Booking id 2 telah di tolak\"\r",
+									"            }\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"let current_data = data.shift();\r",
+									"pm.environment.set(\"post_booking_id\", current_data[\"post_booking_id\"]);\r",
+									"pm.environment.set(\"post_booking_status_code\", current_data[\"post_booking_status_code\"]);\r",
+									"pm.environment.set(\"post_booking_body\", current_data[\"post_booking_body\"]);\r",
+									"pm.environment.set(\"post_booking\", data);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2c05bd4b-81f9-4646-af8e-410c9ea8503c",
+								"exec": [
+									"data = pm.environment.get(\"post_booking\");\r",
+									"flag = false;\r",
+									"\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Reject Booking from hotel With Variable\");\r",
+									"}\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"post_booking_status_code\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Returned data is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.eql(pm.variables.get(\"post_booking_body\"));\r",
+									"});\r",
+									"if (flag) {\r",
+									"    pm.environment.unset(\"post_booking_id\");\r",
+									"    pm.environment.unset(\"post_booking_status_code\");\r",
+									"    pm.environment.unset(\"post_booking_body\");\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_booking_jwt}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_booking",
+									"value": "{{post_booking_id}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/booking/reject",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking",
+								"reject"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "63152b61-ce0a-4046-a517-5e574f25495c",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4b21eb2c-8b64-4912-b3d4-6b8204762e55",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_booking_jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/cancelBooking?id_booking=3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"cancelBooking"
+							],
+							"query": [
+								{
+									"key": "id_booking",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Booking With Variable",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9d8d4b0c-957b-4f14-8db3-61296607730e",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;\r",
+									"data = pm.environment.get(\"post_cancel_booking\");\r",
+									"flag = false;\r",
+									"\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Cancel Booking With Variable\");\r",
+									"}\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"post_booking_status_code\"));\r",
+									"});\r",
+									"if (flag) {\r",
+									"    pm.environment.unset(\"post_booking_id\");\r",
+									"    pm.environment.unset(\"post_booking_status_code\");\r",
+									"    pm.environment.unset(\"post_booking_body\");\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "da742b80-caa9-46ab-8f4e-c284f998847f",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});\r",
+									"data = pm.environment.get(\"post_cancel_booking\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"post_booking_id\": \"?id_booking=3\",\r",
+									"            \"post_booking_status_code\": 200,\r",
+									"            \"post_booking_body\":\r",
+									"            [\r",
+									"                {\r",
+									"                    \"booking_id\": 3,\r",
+									"                    \"nama_hotel\": \"JW Marriot\",\r",
+									"                    \"lokasi\": \"New York\",\r",
+									"                    \"Status\": \"Request Cancel\",\r",
+									"                    \"request_id\": \"R307\"\r",
+									"                }\r",
+									"            ]\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"let current_data = data.shift();\r",
+									"pm.environment.set(\"post_booking_id\", current_data[\"post_booking_id\"]);\r",
+									"pm.environment.set(\"post_booking_status_code\", current_data[\"post_booking_status_code\"]);\r",
+									"pm.environment.set(\"post_booking_body\", current_data[\"post_booking_body\"]);\r",
+									"pm.environment.set(\"post_cancel_booking\", data);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_booking_jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/cancelBooking{{post_booking_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"cancelBooking{{post_booking_id}}"
+							]
+						},
+						"description": "Ada alasan kenapa returned code tidak di cek karena request idnya selalu berubah(auto generate)"
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Cancel From hotel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "4ad35c93-4f8d-4322-bc45-12165f84d696",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "748ba6c9-d246-4c51-be11-4235a16e06b2",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"hotel@yahoo.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"hotel\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_booking_jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/confirmCancel?status=3&request_id=R401",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"confirmCancel"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "3"
+								},
+								{
+									"key": "request_id",
+									"value": "R401"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Cancel From hotel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "cc0ee468-123d-4ed2-a4b0-525d63cb9a96",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "25a026ea-f854-4e9e-a24d-ec753b970a64",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"hotel@yahoo.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"hotel\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_token_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_token_jwt}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/rejectCancel?request_id=R309",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"rejectCancel"
+							],
+							"query": [
+								{
+									"key": "request_id",
+									"value": "R309"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "31c068bc-b934-4515-8f9c-2e89cfca9c88",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email_user",
+									"value": "hotel@yahoo.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "hotel",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						},
+						"description": "Login dengan menggunakan email dan password yang nantinya akan mengembalikan JWT Key"
+					},
+					"response": []
+				},
+				{
+					"name": "Register User",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "be668363-15a6-4cc2-bf94-4faecd971991",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email_user",
+									"value": "william@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "no_hp_user",
+									"value": "085730306554",
+									"type": "text"
+								},
+								{
+									"key": "nama_user",
+									"value": "William",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "ww",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "ww",
+									"type": "text"
+								},
+								{
+									"key": "tipe_user",
+									"value": "1",
+									"type": "text"
+								},
+								{
+									"key": "ktp",
+									"type": "file",
+									"src": "/C:/Users/ASUS/Pictures/Saved Pictures/Magic Puzzles. Autumn in  Istanbul, Turkey.jpg"
+								}
+							],
+							"options": {
+								"formdata": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/user/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						},
+						"description": "Semua field yang ada dibawah ini bersifat wajib. Endpoint ini berfungsi untuk menambahkan user baru.\nTipe user 1 -> User biasa\nTipe user 2 -> User Hotel\nTipe user 3 -> Operator API"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User (Nonactive)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d1165141-b69a-470a-ae03-ca703ffa7808",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_user_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "2f0c6e9d-1f4b-4469-ad22-2de898cc0d19",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_user_jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/user/deleteUser",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"deleteUser"
+							]
+						},
+						"description": "Endpoint ini berfungsi untuk menonaktifkan User. Email user diambil dari JWT key"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Data User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "21a6978c-878b-40fa-a899-ef00517b3cd3",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_user_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "fa74cbef-082b-4513-9752-4e972a2470a1",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_user_jwt}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "email_user",
+									"value": "sastrabudi@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "no_hp_user",
+									"value": "085730708551",
+									"type": "text"
+								},
+								{
+									"key": "nama_user",
+									"value": "Budi Budi Budi",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "budi",
+									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "budi",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/user/updateUser",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"updateUser"
+							]
+						},
+						"description": "Endpoint ini berfungsi untuk mengubah profil user. JWT key dibutuhkan untuk autorisasi"
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoint yang ada pada bagian User ini berfungsi untuk melakukan kegiatan-kegiatan yang berhubungan dengan akun user. Semua field bersifat wajib",
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Reschedule",
+			"item": [
+				{
+					"name": "Get Schedule",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "200e4ac7-09e0-460c-a468-75434cddeafc",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "69463230-8473-4db2-9934-ea2235fb586c",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_booking_jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/getSchedule",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"getSchedule"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Schedule For Refund",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e1402608-5369-4364-920b-05d0dfcacbaf",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "6a258984-b586-4edc-aa11-5953779af311",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"hotel@yahoo.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"hotel\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_booking_jwt}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/getScheduleRefund",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"getScheduleRefund"
+							]
+						},
+						"description": "Untuk mendapatkan schedule yang perlu di refund oleh pihak hotel"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Schedule By Booking ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "994b5a78-a841-4027-b766-6808d47c95af",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "4ada97db-f7e7-4b93-acfd-6a2a21d2f861",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_booking_jwt}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/getSchedule?id_booking=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"getSchedule"
+							],
+							"query": [
+								{
+									"key": "id_booking",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Schedule With Variable",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "13aa0b64-dea4-47e7-8dae-4b091685aece",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;\r",
+									"data = pm.environment.get(\"get_schedule\");\r",
+									"flag = false;\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Get Schedule With Variable\");\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"get_schedule_status_code\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Returned data is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.eql(pm.variables.get(\"get_schedule_body\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c58e5c6a-6eae-41c8-a5ec-b01b12d84237",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});\r",
+									"data = pm.environment.get(\"get_schedule\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"get_schedule_status_code\": 400,\r",
+									"            \"get_booking_id\": \"\",\r",
+									"            \"get_schedule_body\": {\r",
+									"                \"status\": 400,\r",
+									"                \"message\": \"id_booking tidak ada pada url anda\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"get_schedule_status_code\": 200,\r",
+									"            \"get_booking_id\": \"?id_booking=2\",\r",
+									"            \"get_schedule_body\":\r",
+									"                [\r",
+									"                    {\r",
+									"                        \"Booking ID\": 2,\r",
+									"                        \"Nama Hotel\": \"JW Marriot\",\r",
+									"                        \"Lokasi\": \"New York\",\r",
+									"                        \"Status Booking\": \"Booking Gagal\",\r",
+									"                        \"Request ID\": \"0\"\r",
+									"                    }\r",
+									"                ]\r",
+									"        }\r",
+									"    ];\r",
+									"}\r",
+									"let currentData = data.shift();\r",
+									"pm.environment.set(\"get_booking_id\", currentData[\"get_booking_id\"]);\r",
+									"pm.environment.set(\"get_schedule_status_code\", currentData[\"get_schedule_status_code\"]);\r",
+									"pm.environment.set(\"get_schedule_body\", currentData[\"get_schedule_body\"]);\r",
+									"pm.environment.set(\"get_schedule\", data);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_booking_jwt}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/getScheduleWithVariable{{get_booking_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"getScheduleWithVariable{{get_booking_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reschedule Booking",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fd742c97-fe6e-4c5a-b4d3-b5fff8753ca4",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e6477697-051c-47e5-832f-0fd42bcc5afd",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_booking_jwt}}",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "new_checkin",
+									"value": "2020-05-12",
+									"description": "yyyy-mm-dd",
+									"type": "text"
+								},
+								{
+									"key": "new_checkout",
+									"value": "2020-05-17",
+									"description": "yyyy-mm-dd",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/request/rescheduleBooking?id_booking=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"rescheduleBooking"
+							],
+							"query": [
+								{
+									"key": "id_booking",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reschedule Booking With Variable",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5a6b4a38-9d1c-4340-ad25-536f0d5bb835",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;\r",
+									"data = pm.environment.get(\"post_reschedule_booking\");\r",
+									"flag = false;\r",
+									"\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Reschedule Booking With Variable\");\r",
+									"}\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"post_booking_status_code\"));\r",
+									"});\r",
+									"if (flag) {\r",
+									"    pm.environment.unset(\"post_booking_id\");\r",
+									"    pm.environment.unset(\"post_booking_status_code\");\r",
+									"    pm.environment.unset(\"post_booking_body\");\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "11058e22-248c-45f0-87f1-e67fa7817b37",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});\r",
+									"data = pm.environment.get(\"post_reschedule_booking\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"post_booking_id\": \"?id_booking=4\",\r",
+									"            \"post_booking_status_code\": 200,\r",
+									"            \"post_booking_body\":\r",
+									"            [\r",
+									"                {\r",
+									"                    \"booking_id\": 4,\r",
+									"                    \"nama_hotel\": \"JW Marriot\",\r",
+									"                    \"lokasi\": \"New York\",\r",
+									"                    \"Status\": \"Request Reschedule\",\r",
+									"                    \"request_id\": \"R402\"\r",
+									"                }\r",
+									"            ]\r",
+									"        }\r",
+									"    ]\r",
+									"}\r",
+									"\r",
+									"let current_data = data.shift();\r",
+									"pm.environment.set(\"post_booking_id\", current_data[\"post_booking_id\"]);\r",
+									"pm.environment.set(\"post_booking_status_code\", current_data[\"post_booking_status_code\"]);\r",
+									"pm.environment.set(\"post_booking_body\", current_data[\"post_booking_body\"]);\r",
+									"pm.environment.set(\"post_reschedule_booking\", data);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_booking_jwt}}"
+							},
+							{
+								"key": "",
+								"type": "text",
+								"value": "",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "new_checkin",
+									"value": "2020-05-12",
+									"description": "yyyy-mm-dd",
+									"type": "text"
+								},
+								{
+									"key": "new_checkout",
+									"value": "2020-05-17",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/request/rescheduleBooking{{post_booking_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"rescheduleBooking{{post_booking_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Confirm Reschedule From Hotel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "16af722a-7de9-4205-9088-9cf2d04b241a",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3236887b-6ee3-4646-a26b-91a43b0d3361",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"hotel@yahoo.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"hotel\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_booking_jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/confirmReschedule?status=1&request_id=R302",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"confirmReschedule"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "1"
+								},
+								{
+									"key": "request_id",
+									"value": "R302"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Reject Reschedule From Hotel",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e9ddd3b5-7920-4755-9406-8f0caadfba55",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "b98c9a18-e9ad-4a53-9365-ee6e32187496",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"hotel@yahoo.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"hotel\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_token_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_token_jwt}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/rejectReschedule?request_id=R311",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"rejectReschedule"
+							],
+							"query": [
+								{
+									"key": "request_id",
+									"value": "R311"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Request",
+			"item": [
+				{
+					"name": "Get Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "184f3778-ad3a-4d10-a623-e5feb1e979f7",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cb9edd3a-5003-4583-9042-2b24c589b328",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"hotel@yahoo.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"hotel\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_booking_jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/getRequest",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"getRequest"
+							]
+						},
+						"description": "Oleh pihak hotel liat request-request(reschedule/cancel) yang ada dimana statusnya masih menunggu(status = 0)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Request By Request ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "585e2887-f772-45da-9a4f-c4797614b292",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "a9cc99aa-d50b-47bb-9b74-6850653cad33",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"hotel@yahoo.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"hotel\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_booking_jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/getRequest?request_id=R301",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"getRequest"
+							],
+							"query": [
+								{
+									"key": "request_id",
+									"value": "R301"
+								}
+							]
+						},
+						"description": "Oleh pihak hotel liat request-request(reschedule/cancel) yang ada"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Request With Variable",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b295f79d-abdd-49d0-89d6-aa25536bf78c",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;\r",
+									"data = pm.environment.get(\"get_request\");\r",
+									"flag = false;\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Get Request With Variable\");\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"get_request_status_code\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Returned data is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.eql(pm.variables.get(\"get_request_body\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "3a82586d-1c19-4f0c-9531-468ad636e0b2",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"hotel@yahoo.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"hotel\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});\r",
+									"data = pm.environment.get(\"get_request\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"get_request_status_code\": 400,\r",
+									"            \"get_request_id\": \"\",\r",
+									"            \"get_schedule_body\": {\r",
+									"                \"status\": 400,\r",
+									"                \"message\": \"request_id tidak ada pada url anda\"\r",
+									"            }\r",
+									"        },\r",
+									"        {\r",
+									"            \"get_request_status_code\": 200,\r",
+									"            \"get_request_id\": \"?request_id=R301\",\r",
+									"            \"get_request_body\":\r",
+									"                [\r",
+									"                    {\r",
+									"                        \"Request ID\": \"R301\",\r",
+									"                        \"Booking ID\": 3,\r",
+									"                        \"Request Name\": \"Cancel\",\r",
+									"                        \"Deskripsi\": \"\"\r",
+									"                    }\r",
+									"                ]\r",
+									"        }\r",
+									"    ];\r",
+									"}\r",
+									"let currentData = data.shift();\r",
+									"pm.environment.set(\"get_request_id\", currentData[\"get_request_id\"]);\r",
+									"pm.environment.set(\"get_request_status_code\", currentData[\"get_request_status_code\"]);\r",
+									"pm.environment.set(\"get_request_body\", currentData[\"get_request_body\"]);\r",
+									"pm.environment.set(\"get_request\", data);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_booking_jwt}}"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/request/getRequestWithVariable{{get_request_id}}",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"getRequestWithVariable{{get_request_id}}"
+							]
+						},
+						"description": "Oleh pihak hotel liat request-request(reschedule/cancel) yang ada"
+					},
+					"response": []
+				},
+				{
+					"name": "Check Request From Patron",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "9abde5e5-2ae0-4e54-a0ad-8bfb0d0f6c53",
+								"exec": [
+									"tests[\"Status code is 200\"] = responseCode.code == 200;"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e2a84e82-0d20-459c-a1e2-470874e20e8d",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_booking_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_booking_jwt}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "localhost:3000/api/request/checkRequest",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"checkRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Request",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "d7e37603-8740-44f4-9aa3-81f8f3c0bcdb",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_token_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "{{post_token_jwt}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/request/cancelRequest?id_booking=4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"cancelRequest"
+							],
+							"query": [
+								{
+									"key": "id_booking",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Settlement Payment Request",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e0bc16f8-a9a2-44fe-8ce0-064d78a0a6b1",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"sastrabudi@gmail.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"budi\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_token_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_token_jwt}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "request_id",
+									"value": "R301",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/request/settlementPayment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"settlementPayment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Settlement Payment Cancel",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "c598073f-d776-45a3-9c94-796299dcf1a7",
+								"exec": [
+									"pm.sendRequest({\r",
+									"    url: \"localhost:3000/api/user/login\",\r",
+									"    method: \"post\",\r",
+									"    body: {\r",
+									"        mode: \"urlencoded\",\r",
+									"        urlencoded: [\r",
+									"            { key: \"email_user\", value: \"hotel@yahoo.com\", disabled: false },\r",
+									"            { key: \"password\", value: \"hotel\", disabled: false }\r",
+									"        ]\r",
+									"    }\r",
+									"}, function (err, response) {\r",
+									"    pm.environment.set(\"post_token_jwt\", JSON.parse(response.text())[\"token JWT\"]);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"type": "text",
+								"value": "{{post_token_jwt}}"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "booking_id",
+									"value": "3",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/request/settlementPaymentCanceled",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"request",
+								"settlementPaymentCanceled"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Settlement Payment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IndpbGxpYW1AZ21haWwuY29tIiwidGlwZV91c2VyIjoiMSIsImlhdCI6MTU5MDgzOTYwOCwiZXhwIjoxNTkwODQ1MDA4fQ.bqSK3lDl2x7g2gnpWIqqNy5D_SEMzUVuuohKyjgG1pY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_booking",
+									"value": "0",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/booking/settlementPayment",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking",
+								"settlementPayment"
+							]
+						},
+						"description": "Melakukan pembayaran lewat payment gateway xendit dengan banyak metode pembayaran atas booking yang dilakukan. pasang lah invoice_url anda pada browser untuk dapat melakukan pembayaran"
+					},
+					"response": []
+				},
+				{
+					"name": "Checking payment",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_booking",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "invoice_id",
+									"value": "5ec4ee3f0d071f1fd2597102",
+									"type": "text",
+									"disabled": true
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/booking/payment/check",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking",
+								"payment",
+								"check"
+							]
+						},
+						"description": "cek apakah payment sudah dilakukan atau belum"
+					},
+					"response": []
+				},
+				{
+					"name": "Checking payment With Variable",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "865bbe23-c200-431b-8f82-4112d83b4938",
+								"exec": [
+									"data = pm.environment.get(\"get_payment\");\r",
+									"if (!data || data.length <= 0) {\r",
+									"    data = [\r",
+									"        {\r",
+									"            \"get_payment_status_code\": 200,\r",
+									"            \"get_payment_id\": \"5\",\r",
+									"            \"get_payment_body\": {\r",
+									"                \"status\": 200,\r",
+									"                \"message\": \"pembayaran berhasil\"\r",
+									"            }\r",
+									"        },{\r",
+									"            \"get_payment_status_code\": 404,\r",
+									"            \"get_payment_id\": \"1\",\r",
+									"            \"get_payment_body\":{\r",
+									"                \"status\": 404,\r",
+									"                \"message\": \"pembayaran tidak berhasil atau tidak ada\"\r",
+									"            }\r",
+									"        },\r",
+									"    ];\r",
+									"}\r",
+									"let currentData = data.shift();\r",
+									"pm.environment.set(\"get_payment_status_code\", currentData[\"get_payment_status_code\"]);\r",
+									"pm.environment.set(\"get_payment_id\", currentData[\"get_payment_id\"]);\r",
+									"pm.environment.set(\"get_payment_body\", currentData[\"get_payment_body\"]);\r",
+									"pm.environment.set(\"get_payment\", data);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "0490247a-01d8-4db3-8483-a8e79cfb262c",
+								"exec": [
+									"data = pm.environment.get(\"get_payment\");\r",
+									"flag = false;\r",
+									"if (data && data.length > 0) {\r",
+									"    postman.setNextRequest(\"Checking payment With Variable\");\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Status code is correct\", function () {\r",
+									"    pm.response.to.have.status(pm.variables.get(\"get_payment_status_code\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Returned data is correct\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData).to.eql(pm.variables.get(\"get_payment_body\"));\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "id_booking",
+									"value": "{{get_payment_id}}",
+									"type": "text"
+								}
+							],
+							"options": {
+								"urlencoded": {}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/booking/payment/check",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"booking",
+								"payment",
+								"check"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
