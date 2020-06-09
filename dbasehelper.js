@@ -28,8 +28,16 @@ const query = async(sql)=>{
     return hasil;
 }
 
+const endConn = async()=> {
+    pool.end(function (err) {
+        // all connections in the pool have ended
+      });
+}
+
+
 module.exports = {
     'executeQuery' : executeQuery,
     'getConnection' : getConnection,
-    "query" : query
+    "query" : query,
+    "end":endConn
 }
