@@ -38,7 +38,7 @@ const updateUser = async(email,nohp,nama,password)=>{
     const query = `update user set nohp = '${nohp}', password = '${password}', nama = '${nama}' where email = '${email}'`;
     const result = await dbase.executeQuery(query,connection);
     connection.destroy();
-    return "Berhasil Update Data User!";
+    return "Update Data User Berhasil!";
 }
 
 module.exports = {
