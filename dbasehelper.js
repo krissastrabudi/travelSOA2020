@@ -24,7 +24,7 @@ const executeQuery = async (query, conn) => {
 const query = async(sql)=>{
     var con = await getConnection();
     var hasil = await executeQuery(sql,con);
-    con.release();
+    con.destroy();
     return hasil;
 }
 
