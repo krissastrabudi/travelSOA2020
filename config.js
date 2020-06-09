@@ -1,10 +1,10 @@
 const config = {
     database: {
-        host: '65.19.141.67',
-        user: 'sasbud',
-        password: 'cobacobi123',
+        host: 'travel-soa-2020.jux.in',
+        user: 'travelso',
+        password: '3XxP92zum3',
         port: '3306',
-        database: 'sasbud_travel_soa_2020'
+        database: 'travelso_2020'
     },
         server: {
             host: '127.0.0.1',
