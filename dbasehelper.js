@@ -1,11 +1,7 @@
 const mysql = require('mysql');
 const config = require('./config');
 
-const pool=null;
-
-const startConn = async()=> {
-    pool = mysql.createPool(config.database);
-}
+const pool = mysql.createPool(config.database);
 
 const getConnection = async () => {
     return new Promise((resolve, reject) => {
@@ -43,6 +39,5 @@ module.exports = {
     'executeQuery' : executeQuery,
     'getConnection' : getConnection,
     "query" : query,
-    "end":endConn,
-    "start":startConn
+    "end":endConn
 }
