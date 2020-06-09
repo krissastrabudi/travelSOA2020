@@ -6,6 +6,7 @@ const addUser = async (email,no_hp,nama,password,foto_ktp,tipe_user)=> {
     const query = `insert into user values ('${email}','${no_hp}','${nama}','${password}','${foto_ktp}','${tipe_user}','1')`;
     const result = await dbase.executeQuery(query,connection);
     connection.release();
+    connection.end();
     return "Berhasil Register User!";
 }
 
@@ -14,6 +15,7 @@ const getUser = async(email,password) => {
     const query = `select * from user where email = '${email}' and password = '${password}'`;
     const result = await dbase.executeQuery(query,connection);
     connection.release();
+    connection.end();
     return result;
 }
 
@@ -22,6 +24,7 @@ const getUserOnly = async(email) => {
     const query = `select * from user where email = '${email}' and tipe_user=1`;
     const result = await dbase.executeQuery(query,connection);
     connection.release();
+    connection.end();
     return result;
 }
 
@@ -30,6 +33,7 @@ const deleteUser = async(email) =>{
     const query = `update user set status_user = '0' where email = '${email}'`;
     const result = await dbase.executeQuery(query,connection);
     connection.release();
+    connection.end();
     return "Berhasil Nonaktifkan User!";
 }
 
@@ -38,6 +42,7 @@ const updateUser = async(email,nohp,nama,password)=>{
     const query = `update user set nohp = '${nohp}', password = '${password}', nama = '${nama}' where email = '${email}'`;
     const result = await dbase.executeQuery(query,connection);
     connection.release();
+    connection.end();
     return "Berhasil Update Data User!";
 }
 
