@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const config = require('./config');
 
-const pool;
+const pool=null;
 
 const startConn = async()=> {
     pool = mysql.createPool(config.database);
