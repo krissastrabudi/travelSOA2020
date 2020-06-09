@@ -162,6 +162,7 @@ router.post("/status",async (req,res)=>{
                     });
                 }
             }catch(err){
+                console.log(err)
                 res.status(403).send({
                     "status":403,
                     "message":"User Not Authorized"
@@ -280,8 +281,8 @@ router.post("/settlementPayment",async(req,res)=>{
                         amount: total_harga,
                         payerEmail: user["email"],
                         description: "Payment Booking : "+id_booking+"\n Biaya Booking dikenai pajak 5%",
-                        successRedirectURL: "http://localhost:3000/api/booking/payment/success/"+externalID+"/"+detail["total_harga"]+"/"+user["email"]+"/"+id_booking,
-                        failureRedirectURL: "http://localhost:3000/api/booking/payment/error/"+externalID+"/"+detail["total_harga"]+"/"+user["email"]+"/"+id_booking
+                        successRedirectURL: "https://proyek-soa-217116653.herokuapp.com/api/booking/payment/success/"+externalID+"/"+detail["total_harga"]+"/"+user["email"]+"/"+id_booking,
+                        failureRedirectURL: "https://proyek-soa-217116653.herokuapp.com/api/booking/payment/error/"+externalID+"/"+detail["total_harga"]+"/"+user["email"]+"/"+id_booking
                     });
                     xendit_id=resp["id"];
                     res.status(200).send({
