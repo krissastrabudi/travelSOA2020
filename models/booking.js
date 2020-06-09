@@ -43,14 +43,14 @@ async function searchBooking(booking_id){
 
 async function changeBookingStatus(booking_id,status){
     if(status){
-        var sql =`UPDATE HBOOKING SET status_booking='${status}' WHERE booking_id='${booking_id}'`;
+        var sql =`UPDATE hbooking SET status_booking='${status}' WHERE booking_id='${booking_id}'`;
         status=status;
     }
     else {
         var sql = `SELECT status_booking+1 as \"status_booking\" from hbooking where booking_id='${booking_id}'`;
         status = await dbase.query(sql);
         status = parseInt(status[0]["status_booking"]);
-        sql =`UPDATE HBOOKING SET status_booking=${status} WHERE booking_id='${booking_id}'`;
+        sql =`UPDATE hbooking SET status_booking=${status} WHERE booking_id='${booking_id}'`;
     }
     await dbase.query(sql);
     var kembali="";
@@ -62,22 +62,22 @@ async function changeBookingStatus(booking_id,status){
     return kembali;
 }
 async function confirmBooking(id_booking){
-    var sql =`UPDATE HBOOKING SET status_booking=4 WHERE booking_id='${id_booking}'`;
+    var sql =`UPDATE hbooking SET status_booking=4 WHERE booking_id='${id_booking}'`;
     await dbase.query(sql);
 }
 async function rejectBooking(id_booking){
-    var sql =`UPDATE HBOOKING SET status_booking=5 WHERE booking_id='${id_booking}'`;
+    var sql =`UPDATE hbooking SET status_booking=5 WHERE booking_id='${id_booking}'`;
     await dbase.query(sql);
 }
 
 async function addPayment(xendit_id,payment_id,total_harga,user_email,id_booking){
-    var sql =`INSERT INTO PAYMENT(xendit_id,payment_id,booking_id,payment_by,amount) VALUES('${xendit_id}','${payment_id}','${id_booking}','${user_email}','${total_harga}')`;
+    var sql =`INSERT INTO payment(xendit_id,payment_id,booking_id,payment_by,amount) VALUES('${xendit_id}','${payment_id}','${id_booking}','${user_email}','${total_harga}')`;
     var hasil = await dbase.query(sql);
     return hasil;
 }
 
 async function changePaymentStatus(id_booking){
-    var sql = `SELECT * FROM PAYMENT WHERE booking_id='${id_booking}'`;
+    var sql = `SELECT * FROM payment WHERE booking_id='${id_booking}'`;
     return await dbase.query(sql);
 }
 
