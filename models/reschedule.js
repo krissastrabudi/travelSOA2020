@@ -12,7 +12,7 @@ async function cariBooking(booking_id){
     return data;
 }
 async function searchBookings(booking_id,customer_email,tipe_user){
-    var sql =`SELECT booking_id,nama_hotel,lokasi,(CASE WHEN status_booking=1 THEN 'Pembayaran belum selesai' WHEN status_booking=2 THEN 'Booking sedang diproses' WHEN status_booking=3 THEN 'Booking telah dipesan pada hotel' WHEN status_booking=4 THEN 'Booking berhasil' WHEN status_booking=6 THEN 'Request Reschedule' WHEN status_booking=7 THEN 'Request Cancel'  WHEN status_booking=8 THEN 'Canceled' WHEN status_booking=9 THEN 'Dana Berhasil Di Refund' ELSE 'Booking Gagal' END) as \"Status\", request_id FROM hbooking WHERE customer_email ='${customer_email}'`;
+    var sql =`SELECT booking_id,nama_hotel,check_in,check_out,lokasi,(CASE WHEN status_booking=1 THEN 'Pembayaran belum selesai' WHEN status_booking=2 THEN 'Booking sedang diproses' WHEN status_booking=3 THEN 'Booking telah dipesan pada hotel' WHEN status_booking=4 THEN 'Booking berhasil' WHEN status_booking=6 THEN 'Request Reschedule' WHEN status_booking=7 THEN 'Request Cancel'  WHEN status_booking=8 THEN 'Canceled' WHEN status_booking=9 THEN 'Dana Berhasil Di Refund' ELSE 'Booking Gagal' END) as \"Status\", request_id FROM hbooking WHERE customer_email ='${customer_email}'`;
     if(booking_id!=""&&booking_id){
         sql = sql+ ` and booking_id='${booking_id}'`; 
     }
@@ -61,7 +61,7 @@ async function getRequest(request_id){
     return data;
 }
 async function getRequestByEmail(email){
-    var sql = `select request_id, booking_id, request_name, deskripsi, request_start, request_end,(CASE WHEN status=0 THEN 'Menunggu Konfirmasi Dari Pihak Hotel' WHEN status=1 THEN 'Reschedule Sukses' WHEN status=2 THEN 'Reschedule Ditolak' WHEN status=3 THEN 'Cancel Sukses' ELSE 'Cancel Ditolak' END) as \"Status\"  from request`
+    var sql = `select request_id, booking_id, request_name, deskripsi, request_start, request_end,(CASE WHEN status=0 THEN 'Menunggu Konfirmasi Dari Pihak Hotel' WHEN status=1 THEN 'Reschedule Sukses' WHEN status=2 THEN 'Reschedule Ditolak' WHEN status=3 THEN 'Cancel Sukses' WHEN status=5 THEN 'Menunggu Pembayaran' WHEN status=6 THEN 'Pembayaran Gagal' WHEN status=7 THEN 'Request Canceled' ELSE 'Cancel Ditolak' END) as \"Status\"  from request`
     var data = await dbase.query(sql);
     return data;
 }

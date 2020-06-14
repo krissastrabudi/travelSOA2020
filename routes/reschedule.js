@@ -52,6 +52,8 @@ router.get('/getSchedule',async(req,res)=>{
                     "Booking ID" : element["booking_id"],
                     "Nama Hotel" : element["nama_hotel"],
                     "Lokasi" : element["lokasi"],
+                    "Check In": element["check_in"],
+                    "Check Out": element["check_out"],
                     "Status Booking" : element["Status"],
                     "Request ID": element["request_id"]
                 }
