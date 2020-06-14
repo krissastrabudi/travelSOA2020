@@ -93,7 +93,7 @@ async function getTotalHotel(booking_id){
     return data;
 }
 async function addPayment(xendit_id,payment_id,total_harga,user_email,request_id,date){
-    var sql =`INSERT INTO PAYMENT VALUES('${payment_id}','','${request_id}','${xendit_id}','${user_email}','${total_harga}','${date}')`;
+    var sql =`INSERT INTO payment VALUES('${payment_id}','','${request_id}','${xendit_id}','${user_email}','${total_harga}','${date}')`;
     console.log(sql);
     await dbase.query(sql);
 }
@@ -106,7 +106,7 @@ async function editBiaya(total,request_id){
     await dbase.query(sql);
 }
 async function updateTotal(total,id_booking){
-    var sql =`UPDATE HBOOKING SET total_harga = ${total} WHERE booking_id='${id_booking}'`;
+    var sql =`UPDATE hbooking SET total_harga = ${total} WHERE booking_id='${id_booking}'`;
     await dbase.query(sql);
 }
 module.exports = {
