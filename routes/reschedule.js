@@ -728,10 +728,10 @@ router.post("/settlementPaymentCanceled",async(req,res)=>{
                         amount: total,
                         payerEmail: user["email"],
                         description: "Payment Booking : "+booking_id,
-                        success_redirect_url: "http://localhost:3000/api/request/payment/successCancel/"+booking_id,
-                        failure_redirect_url: "http://localhost:3000/api/request/payment/errorCancel/"+booking_id,
-                        successRedirectURL: "http://localhost:3000/api/request/payment/successCancel/"+booking_id,
-                        failureRedirectURL: "http://localhost:3000/api/request/payment/errorCancel/"+booking_id
+                        success_redirect_url: "https://proyek-soa-217116653.herokuapp.com/api/request/payment/successCancel/"+booking_id,
+                        failure_redirect_url: "https://proyek-soa-217116653.herokuapp.com/api/request/payment/errorCancel/"+booking_id,
+                        successRedirectURL: "https://proyek-soa-217116653.herokuapp.com/api/request/payment/successCancel/"+booking_id,
+                        failureRedirectURL: "https://proyek-soa-217116653.herokuapp.com/api/request/payment/errorCancel/"+booking_id
                     });
                     var date = dateFormat(new Date(),"yyyy-mm-dd HH:MM:ss");
                     await rescheduleModel.addPayment(resp["id"],externalID,total,user["email"],booking_id,date);
@@ -822,10 +822,10 @@ router.post("/settlementPayment",async(req,res)=>{
                         amount: total,
                         payerEmail: user["email"],
                         description: "Payment Booking : "+request_id,
-                        success_redirect_url: "http://localhost:3000/api/request/payment/success/"+request_id+"/"+totalHarga+"/"+detail[0].booking_id,
-                        failure_redirect_url: "http://localhost:3000/api/request/payment/error/"+request_id,
-                        successRedirectURL: "http://localhost:3000/api/request/payment/success/"+request_id+"/"+totalHarga+"/"+detail[0].booking_id,
-                        failureRedirectURL: "http://localhost:3000/api/request/payment/error/"+request_id
+                        success_redirect_url: "https://proyek-soa-217116653.herokuapp.com/api/request/payment/success/"+request_id+"/"+totalHarga+"/"+detail[0].booking_id,
+                        failure_redirect_url: "https://proyek-soa-217116653.herokuapp.com/api/request/payment/error/"+request_id,
+                        successRedirectURL: "https://proyek-soa-217116653.herokuapp.com/api/request/payment/success/"+request_id+"/"+totalHarga+"/"+detail[0].booking_id,
+                        failureRedirectURL: "https://proyek-soa-217116653.herokuapp.com/api/request/payment/error/"+request_id
                     });
                     var date = dateFormat(new Date(),"yyyy-mm-dd HH:MM:ss");
                     await rescheduleModel.addPayment(resp["id"],externalID,total,user["email"],request_id,date);
